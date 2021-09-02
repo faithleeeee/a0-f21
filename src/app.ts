@@ -131,15 +131,15 @@ class Drawing {
             var p3: ps.MousePosition = {x: p2.x, y: p2.y + height}
             var p4: ps.MousePosition = {x: p1.x, y: p1.y + height}
             var smaller = Math.min(Math.abs(width), Math.abs(height));
-            var step = Math.floor(smaller/128)
+            var num = Math.floor(smaller/128)
             var check = smaller%128
             if(check == 0){
-                step = step -1;
+                num = num -1;
             }
-            Triangle(centerP, p1, p2, element.color, this.ctx, step);
-            Triangle(centerP, p2, p3, element.color, this.ctx, step);
-            Triangle(centerP, p3, p4, element.color, this.ctx, step);
-            Triangle(centerP, p4, p1, element.color, this.ctx, step);
+            Triangle(centerP, p1, p2, element.color, this.ctx, num);
+            Triangle(centerP, p2, p3, element.color, this.ctx, num);
+            Triangle(centerP, p3, p4, element.color, this.ctx, num);
+            Triangle(centerP, p4, p1, element.color, this.ctx, num);
 
 
 
@@ -278,12 +278,12 @@ function exec() {
     myDrawing.render(); 
 }
 function Triangle(center: ps.MousePosition , p1: ps.MousePosition, p2: ps.MousePosition, 
-    color: Color, ctx: CanvasRenderingContext2D, step: number ){
+    color: Color, ctx: CanvasRenderingContext2D, num: number ){
 
         var midP1: ps.MousePosition = {x: (p1.x - center.x)/2 + center.x, y: (p1.y - center.y)/2 + center.y};
         var midP2: ps.MousePosition = {x: (p2.x - center.x)/2 + center.x, y: (p2.y - center.y)/2 + center.y};
         var midP3: ps.MousePosition = {x: (p2.x - p1.x)/2 + p1.x, y: (p2.y - p1.y)/2 + p1.y};
-        var original = ctx.fillStyle
+    
         ctx.fillStyle = color.toString()
 
         ctx.beginPath()
@@ -299,10 +299,11 @@ function Triangle(center: ps.MousePosition , p1: ps.MousePosition, p2: ps.MouseP
         ctx.stroke();
         ctx.fill()
         ctx.closePath()
-        if(step > 0){
-            Triangle(center, midP1, midP2, darken(color), ctx, step-1);
-            Triangle(midP1, p1, midP3, darken(color), ctx, step-1);
-            Triangle(midP2, midP3, p2, darken(color), ctx, step-1);
+
+        if(num > 0){
+            Triangle(center, midP1, midP2, darken(color), ctx, num - 1);
+            Triangle(midP1, p1, midP3, darken(color), ctx, num - 1);
+            Triangle(midP2, midP3, p2, darken(color), ctx, num - 1);
         }
 
 }

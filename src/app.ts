@@ -117,29 +117,34 @@ class Drawing {
             var height = -element.p1.y + element.p2.y
             this.ctx.strokeRect(element.p1.x, element.p1.y,width, height);
             this.ctx.beginPath();
+
             this.ctx.moveTo(element.p1.x, element.p1.y);
-            this.ctx.lineTo(element.p2.x, element.p2.y);
             this.ctx.moveTo(element.p1.x + width, element.p1.y);
+
+            this.ctx.lineTo(element.p2.x, element.p2.y);
             this.ctx.lineTo(element.p2.x - width, element.p2.y);
             this.ctx.stroke();
             this.ctx.closePath();
+
             this.ctx.lineWidth = container
             var centerP: ps.MousePosition = {x: element.p1.x + width/2, 
                 y: element.p1.y + height/2};
-            var p1 = element.p1
-            var p2: ps.MousePosition = {x: p1.x + width, y: p1.y}
-            var p3: ps.MousePosition = {x: p2.x, y: p2.y + height}
-            var p4: ps.MousePosition = {x: p1.x, y: p1.y + height}
+            var pA = element.p1
+            var pB: ps.MousePosition = {x: p1.x + width, y: p1.y}
+            var pC: ps.MousePosition = {x: p2.x, y: p2.y + height}
+            var pD: ps.MousePosition = {x: p1.x, y: p1.y + height}
             var smaller = Math.min(Math.abs(width), Math.abs(height));
             var num = Math.floor(smaller/128)
             var check = smaller%128
             if(check == 0){
                 num = num -1;
             }
-            Triangle(centerP, p1, p2, element.color, this.ctx, num);
-            Triangle(centerP, p2, p3, element.color, this.ctx, num);
-            Triangle(centerP, p3, p4, element.color, this.ctx, num);
-            Triangle(centerP, p4, p1, element.color, this.ctx, num);
+
+            //draw triangle
+            Triangle(centerP, pA, pB, element.color, this.ctx, num);
+            Triangle(centerP, pB, pC, element.color, this.ctx, num);
+            Triangle(centerP, pC, pD, element.color, this.ctx, num);
+            Triangle(centerP, pD, pA, element.color, this.ctx, num);
 
 
 
@@ -164,6 +169,7 @@ class Drawing {
                 var original = this.ctx.strokeStyle
                 var startx = this.clickStart.x
                 var starty = this.clickStart.y
+
                 this.ctx.strokeStyle = 'grey'
                 this.ctx.strokeRect(this.clickStart.x, this.clickStart.y,
                     -this.clickStart.x + this.mousePosition.x, -this.clickStart.y + this.mousePosition.y)
@@ -206,6 +212,8 @@ class Drawing {
 
             // **** TODO *****
             // add code here to react to mouse up events
+
+
             if(this.clickStart != null){
                 let rect: Rectangle = {p1 : this.clickStart, p2 : clickEnd, color: randomColor()};
                 this.rects.push(rect);

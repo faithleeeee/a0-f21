@@ -130,9 +130,9 @@ class Drawing {
             var centerP: ps.MousePosition = {x: element.p1.x + width/2, 
                 y: element.p1.y + height/2};
             var pA = element.p1
-            var pB: ps.MousePosition = {x: p1.x + width, y: p1.y}
-            var pC: ps.MousePosition = {x: p2.x, y: p2.y + height}
-            var pD: ps.MousePosition = {x: p1.x, y: p1.y + height}
+            var pB: ps.MousePosition = {x: pA.x + width, y: pA.y}
+            var pC: ps.MousePosition = {x: pB.x, y: pB.y + height}
+            var pD: ps.MousePosition = {x: pA.x, y: pA.y + height}
             var smaller = Math.min(Math.abs(width), Math.abs(height));
             var num = Math.floor(smaller/128)
             var check = smaller%128
@@ -145,8 +145,6 @@ class Drawing {
             Triangle(centerP, pB, pC, element.color, this.ctx, num);
             Triangle(centerP, pC, pD, element.color, this.ctx, num);
             Triangle(centerP, pD, pA, element.color, this.ctx, num);
-
-
 
          });
 
